@@ -1,6 +1,5 @@
 "use client"
 
-
 import {
   ChevronDown,
   ChevronRight,
@@ -13,7 +12,6 @@ import {cn} from "@/lib/utils";
 import {Id} from "@/convex/_generated/dataModel";
 import {Skeleton} from "@/components/ui/skeleton";
 import {toast} from "sonner";
-import {router} from "next/client";
 import {useMutation} from "convex/react";
 import {api} from "@/convex/_generated/api";
 import {
@@ -49,7 +47,7 @@ export const Item = ({
   level = 0,
   onExpand,
   expanded,
-}) => {
+}: ItemProps) => {
   const router = useRouter();
   const create = useMutation(api.documents.create);
   const archive = useMutation(api.documents.archive);
@@ -60,7 +58,7 @@ export const Item = ({
     event.stopPropagation();
     if (!id) return;
     const promise = archive({ id })
-      .then(() => router.push("/documents"))
+      // .then(() => router.push("/documents"))
 
     toast.promise(promise, {
       loading: "Moving to trash...",
