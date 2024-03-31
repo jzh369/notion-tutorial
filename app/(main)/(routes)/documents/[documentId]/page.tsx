@@ -26,6 +26,15 @@ const DocumentIdPage = ({
 
   const update = useMutation(api.documents.update);
 
+  const Editor = useMemo(() => dynamic(() => import("@/components/editor"), { ssr: false }) ,[]);
+
+  const onContentChange = (content: string) => {
+    update({
+      id: params.documentId,
+      content
+    });
+  };
+
   if (document === undefined) {
     return (
       <div>
@@ -51,6 +60,10 @@ const DocumentIdPage = ({
       <Cover url={document.coverImage} />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
         <Toolbar initialData={document} />
+        <Editor
+          onContentChange={onContentChange}
+          initialContent={document.content}
+        />
       </div>
     </div>
   );
